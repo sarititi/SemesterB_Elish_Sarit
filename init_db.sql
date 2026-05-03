@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS todos (
     user_id INT,
     title VARCHAR(255),
     completed BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    ON DELETE CASCADE
 );
 
 -- posts
@@ -30,7 +31,8 @@ CREATE TABLE IF NOT EXISTS posts (
     user_id INT,
     title VARCHAR(255),
     body TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    ON DELETE CASCADE
 );
 
 -- comments
@@ -40,7 +42,8 @@ CREATE TABLE IF NOT EXISTS comments (
     user_id INT,
     body TEXT,
     FOREIGN KEY (post_id) REFERENCES posts(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    ON DELETE CASCADE
 );
 
 
