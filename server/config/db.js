@@ -15,4 +15,6 @@ db.connect(err => {
     }
 });
 
+console.log('Using DB: my_application');
+
 export default db.promise();
