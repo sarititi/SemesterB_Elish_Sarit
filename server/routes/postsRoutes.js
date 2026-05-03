@@ -19,24 +19,24 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/user/:userId', async (req, res) => {
     try {
-        const post = await getPostById(req.params.id);
+        const posts = await getPostsByUserId(req.params.userId);
+        res.json(posts);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+router.get('/:postId', async (req, res) => {
+    try {
+        const post = await getPostById(req.params.postId);
 
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
 
         res.json(post);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
-
-router.get('/user/:userId', async (req, res) => {
-    try {
-        const posts = await getPostsByUserId(req.params.userId);
-        res.json(posts);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -51,18 +51,18 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:postId', async (req, res) => {
     try {
-        const result = await updatePost(req.params.id, req.body);
+        const result = await updatePost(req.params.postId, req.body);
         res.json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:postId', async (req, res) => {
     try {
-        const result = await deletePost(req.params.id);
+        const result = await deletePost(req.params.postId);
         res.json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });

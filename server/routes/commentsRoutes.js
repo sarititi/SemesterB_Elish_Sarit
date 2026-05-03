@@ -19,6 +19,15 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/post/:postId', async (req, res) => {
+    try {
+        const comments = await getCommentsByPostId(req.params.postId);
+        res.json(comments);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 router.get('/:id', async (req, res) => {
     try {
         const comment = await getCommentById(req.params.id);
@@ -28,15 +37,6 @@ router.get('/:id', async (req, res) => {
         }
 
         res.json(comment);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
-
-router.get('/post/:postId', async (req, res) => {
-    try {
-        const comments = await getCommentsByPostId(req.params.postId);
-        res.json(comments);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

@@ -5,10 +5,11 @@ export const getAllPosts = async () => {
     return rows;
 };
 
-export const getPostById = async (id) => {
+// ❗ שינוי כאן
+export const getPostById = async (postId) => {
     const [rows] = await db.query(
-        'SELECT * FROM posts WHERE id = ?',
-        [id]
+        'SELECT * FROM posts WHERE post_id = ?',
+        [postId]
     );
 
     return rows[0];
@@ -32,28 +33,30 @@ export const createPost = async (post) => {
     );
 
     return {
-        id: result.insertId,
+        post_id: result.insertId, // ❗ שינוי
         user_id,
         title,
         body
     };
 };
 
-export const updatePost = async (id, post) => {
+// ❗ שינוי כאן
+export const updatePost = async (postId, post) => {
     const { title, body } = post;
 
     const [result] = await db.query(
-        'UPDATE posts SET title = ?, body = ? WHERE id = ?',
-        [title, body, id]
+        'UPDATE posts SET title = ?, body = ? WHERE post_id = ?',
+        [title, body, postId]
     );
 
     return result;
 };
 
-export const deletePost = async (id) => {
+// ❗ שינוי כאן
+export const deletePost = async (postId) => {
     const [result] = await db.query(
-        'DELETE FROM posts WHERE id = ?',
-        [id]
+        'DELETE FROM posts WHERE post_id = ?',
+        [postId]
     );
 
     return result;
