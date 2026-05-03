@@ -4,7 +4,6 @@ export const getAllPosts = async () => {
     const [rows] = await db.query('SELECT * FROM posts');
     return rows;
 };
-console.log(await getAllPosts());
 
 export const getPostById = async (id) => {
     const [rows] = await db.query(
