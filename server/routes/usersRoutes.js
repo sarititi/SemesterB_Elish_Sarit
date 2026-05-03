@@ -57,7 +57,15 @@ router.post('/', async (req, res) => {
 
 // UPDATE user
 router.put('/:id', async (req, res) => {
+    if (!req.body) {
+        return res.status(400).json({ message: 'Body is required' });
+    }
+
     const { username, email } = req.body;
+
+    if (!username || !email) {
+        return res.status(400).json({ message: 'Missing fields' });
+    }
 
     const result = await updateUser(req.params.id, username, email);
     res.json(result);
