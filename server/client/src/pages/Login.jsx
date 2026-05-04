@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
@@ -6,15 +7,34 @@ function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!username || !password) {
-      setError('יש למלא את כל השדות');
-      return;
-    }
+    try {
+      const res = await fetch('http://localhost:3000/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
 
-    console.log(username, password);
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message);
+        return;
+      }
+
+      // ✔️ שמירה ב-LocalStorage
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      // ✔️ מעבר לעמוד הראשי
+      navigate('/app');
+
+    } catch (err) {
+      setError('Server error');
+    }
   };
 
   return (
@@ -36,9 +56,9 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit">Login</button>
+          <button>Login</button>
 
-          {error && <div className="error">{error}</div>}
+          {error && <p className="error">{error}</p>}
         </form>
       </div>
     </div>

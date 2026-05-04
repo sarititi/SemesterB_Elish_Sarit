@@ -1,0 +1,41 @@
+.app-container {
+  font-family: Arial;
+  min-height: 100vh;
+  background: #f4f6f9;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: #4f46e5;
+  padding: 15px;
+}
+
+.navbar a,
+.navbar button {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.navbar a:hover,
+.navbar button:hover {
+  opacity: 0.8;
+}
+
+.content {
+  padding: 30px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  margin: auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
