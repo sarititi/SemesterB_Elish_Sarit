@@ -14,11 +14,20 @@ app.use(cors({
     allowedHeaders: ['Content-Type']
 }));
 
-app.options('*', cors());
+app.options('/{*path}', cors());
 
 app.use(express.json());
 
 app.use((req, res, next) => {
     console.log('REQ:', req.method, req.url);
     next();
+});
+
+app.use('/users', usersRoutes);
+app.use('/todos', todosRoutes);
+app.use('/posts', postsRoutes);
+app.use('/comments', commentsRoutes);
+
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
 });
