@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
@@ -8,6 +8,12 @@ function Login() {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
+
+  // אם כבר מחובר — אל תיתן לחזור ל-Login
+  const user = localStorage.getItem('user');
+  if (user) {
+    return <Navigate to="/app/info" />;
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
