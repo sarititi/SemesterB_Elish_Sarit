@@ -1,9 +1,10 @@
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
+import { Link, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import Todos from './Todos.jsx';
+import Posts from './Posts.jsx';
 import './MainApp.css';
 
 function MainApp() {
     const navigate = useNavigate();
-
     const user = JSON.parse(localStorage.getItem('user'));
 
     const logout = () => {
@@ -11,23 +12,25 @@ function MainApp() {
         navigate('/login');
     };
 
-
     return (
         <div className="app-container">
-            {/* תפריט עליון */}
-            <div style={{ display: 'flex', gap: '10px' }}>
+            {/* נאבבר עליון */}
+            <nav className="navbar">
                 <Link to="/app/info">Info</Link>
                 <Link to="/app/todos">Todos</Link>
                 <Link to="/app/posts">Posts</Link>
                 <button onClick={logout}>Logout</button>
-            </div>
+            </nav>
 
             {/* עמודים פנימיים */}
-            <Routes>
-                <Route path="info" element={<Info user={user} />} />
-                <Route path="todos" element={<div>Todos page</div>} />
-                <Route path="posts" element={<div>Posts page</div>} />
-            </Routes>
+            <div className="content">
+                <Routes>
+                    <Route path="info" element={<Info user={user} />} />
+                    <Route path="todos" element={<Todos user={user} />} />
+                    <Route path="posts" element={<Posts user={user} />} />
+                    <Route path="*" element={<Navigate to="info" />} />
+                </Routes>
+            </div>
         </div>
     );
 }
@@ -36,8 +39,9 @@ function Info({ user }) {
     return (
         <div className="card">
             <h2>User Info</h2>
-            <p>Username: {user.username}</p>
-            <p>Email: {user.email}</p>
+            <p><strong>Username:</strong> {user.username}</p>
+            <p style={{ marginTop: '8px' }}><strong>Email:</strong> {user.email}</p>
+            <p style={{ marginTop: '8px' }}><strong>ID:</strong> {user.id}</p>
         </div>
     );
 }
